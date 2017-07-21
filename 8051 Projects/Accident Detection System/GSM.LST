@@ -1,0 +1,86 @@
+C51 COMPILER V8.05a   GSM                                                                  07/21/2017 23:58:41 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE GSM
+OBJECT MODULE PLACED IN GSM.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE GSM.C BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include"GSM.h"
+   3          #include"LCD.h"
+   4          
+   5          #define NUMBER1 "9876543210"   //Enter the mobile number
+   6          #define NUMBER2 "0123456789"
+   7          #define NUMBER3 "1111111111"
+   8          
+   9          sbit vib = P3^2;
+  10          sbit buzzer = P0^0;
+  11          
+  12          void main()
+  13          {
+  14   1        unsigned int r;
+  15   1        init_serial();
+  16   1        LCD_initialise();
+  17   1        comwrt(0x80);
+  18   1        display("INITIALISING....");
+  19   1        for(r=0;r<60000;r++);
+  20   1        comwrt(0x80);
+  21   1        display("GSM ACCIDENT DET");
+  22   1        comwrt(0xC0);
+  23   1        display(" VIBRATION: NO  ");
+  24   1        buzzer=1;
+  25   1        while(1) {
+  26   2          if(vib==1) {
+  27   3            buzzer=0;
+  28   3            comwrt(0x80);
+  29   3            display("VIBRATION DETECT");
+  30   3            comwrt(0xC0);
+  31   3            display(" VIBRATION: YES ");
+  32   3            for(r=0;r<30000;r++);
+  33   3            for(r=0;r<30000;r++);
+  34   3            comwrt(0x80);
+  35   3            display("SENDING MSG.....");
+  36   3            sendSMS(NUMBER1,"ACCIDENT DETECTED NEAR DSPC MADAGADIPET PY-01-0229");
+  37   3            sendSMS(NUMBER2,"ACCIDENT DETECTED NEAR DSPC MADAGADIPET PY-01-0229");
+  38   3            sendSMS(NUMBER3,"ACCIDENT DETECTED NEAR DSPC MADAGADIPET PY-01-0229");
+  39   3            comwrt(0xC0);
+  40   3            display("    MSG SENT    ");
+  41   3            for(r=0;r<30000;r++);
+  42   3            for(r=0;r<30000;r++);
+  43   3            for(r=0;r<30000;r++);
+  44   3            comwrt(0x80);
+  45   3            display("CALLING.........");
+  46   3            call(NUMBER1);
+  47   3            call(NUMBER2);
+  48   3            call(NUMBER3);
+  49   3              comwrt(0x80);
+  50   3            display("GSM ACCIDENT DET");
+  51   3          
+  52   3          }
+  53   2          else
+  54   2          {
+  55   3            buzzer=1;
+C51 COMPILER V8.05a   GSM                                                                  07/21/2017 23:58:41 PAGE 2   
+
+  56   3            comwrt(0xC0);
+  57   3            display(" VIBRATION: NO  ");    
+  58   3          }
+  59   2            
+  60   2        }
+  61   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    909    ----
+   CONSTANT SIZE    =    255    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1      23
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

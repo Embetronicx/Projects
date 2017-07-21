@@ -1,0 +1,25 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\SLR\Interlogicx\codes\PROJECTS\2015-2016\DIPLAMO PROJ\GSM_ACCIDENT\GSM.uvproj
+Project File Date:  07/19/2017
+
+<h2>Output:</h2>
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling GSM.C...
+GSM.C(36): warning C196: mspace probably invalid
+GSM.C(37): error C251: illegal octal digit
+GSM.C(37): error C251: illegal octal digit
+GSM.C(47): error C251: illegal octal digit
+GSM.C(47): error C251: illegal octal digit
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling GSM.C...
+linking...
+Program Size: data=24.0 xdata=0 code=1472
+creating hex file from "GSM"...
+"GSM" - 0 Error(s), 0 Warning(s).

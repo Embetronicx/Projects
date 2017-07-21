@@ -1,0 +1,411 @@
+BL51 BANKED LINKER/LOCATER V6.02                                                        07/21/2017  23:58:41  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.02, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, GSM.obj TO GSM
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  GSM.obj (GSM)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?COPY)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?SLCMP)
+
+
+LINK MAP OF MODULE:  GSM (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000EH     UNIT         _DATA_GROUP_
+            DATA    0016H     0001H     UNIT         ?DT?GSM
+            IDATA   0017H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0161H     UNIT         ?PR?MAIN?GSM
+            CODE    0961H     0125H     UNIT         ?C?LIB_CODE
+            CODE    0A86H     00FFH     UNIT         ?CO?GSM
+            CODE    0B85H     00A3H     UNIT         ?PR?_SENDSMS?GSM
+            CODE    0C28H     00A2H     UNIT         ?PR?_CALL?GSM
+            CODE    0CCAH     0045H     UNIT         ?PR?LCD_INITIALISE?GSM
+            CODE    0D0FH     002CH     UNIT         ?PR?_DISPLAY?GSM
+            CODE    0D3BH     0026H     UNIT         ?PR?_DELAY1?GSM
+            CODE    0D61H     0019H     UNIT         ?PR?_COMWRT?GSM
+            CODE    0D7AH     0019H     UNIT         ?PR?_DATAWRT?GSM
+            CODE    0D93H     000FH     UNIT         ?PR?_SENDSERIAL?GSM
+            CODE    0DA2H     000FH     UNIT         ?PR?INIT_SERIAL?GSM
+            CODE    0DB1H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   GSM (?C_STARTUP)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?GSM
+
+?PR?MAIN?GSM                   0008H    0002H
+  +--> ?PR?INIT_SERIAL?GSM
+  +--> ?PR?LCD_INITIALISE?GSM
+BL51 BANKED LINKER/LOCATER V6.02                                                      07/21/2017  23:58:41  PAGE 2
+
+
+  +--> ?PR?_COMWRT?GSM
+  +--> ?CO?GSM
+  +--> ?PR?_DISPLAY?GSM
+  +--> ?PR?_SENDSMS?GSM
+  +--> ?PR?_CALL?GSM
+
+?PR?LCD_INITIALISE?GSM         000AH    000CH
+  +--> ?CO?GSM
+  +--> ?PR?_COMWRT?GSM
+
+?PR?_DISPLAY?GSM               -----    -----
+  +--> ?PR?_COMWRT?GSM
+  +--> ?CO?GSM
+  +--> ?PR?_DATAWRT?GSM
+
+?PR?_SENDSMS?GSM               000AH    0006H
+  +--> ?PR?_SENDSERIAL?GSM
+  +--> ?PR?_DELAY1?GSM
+  +--> ?CO?GSM
+
+?PR?_SENDSERIAL?GSM            -----    -----
+  +--> ?CO?GSM
+
+?PR?_CALL?GSM                  000AH    0003H
+  +--> ?PR?_SENDSERIAL?GSM
+  +--> ?PR?_DELAY1?GSM
+  +--> ?CO?GSM
+
+
+
+SYMBOL TABLE OF MODULE:  GSM (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0DB1H         SEGMENT       ?C_C51STARTUP
+  I:0017H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0DB4H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0DB1H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+BL51 BANKED LINKER/LOCATER V6.02                                                      07/21/2017  23:58:41  PAGE 3
+
+
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0DB1H         LINE#         133
+  C:0DB3H         LINE#         134
+  C:0DB4H         LINE#         135
+  C:0DB5H         LINE#         136
+  C:0DB7H         LINE#         185
+  C:0DBAH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        GSM
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A0H.2       PUBLIC        EN
+  C:0DA2H         PUBLIC        init_serial
+  B:0098H.1       PUBLIC        TI
+  C:0C28H         PUBLIC        _call
+  C:0D61H         PUBLIC        _comwrt
+  C:0B85H         PUBLIC        _sendSMS
+  B:00A0H.0       PUBLIC        RS
+  C:0B62H         PUBLIC        SMS1
+  B:0080H.0       PUBLIC        buzzer
+  C:0B64H         PUBLIC        SMS2
+  C:0800H         PUBLIC        main
+  C:0B6DH         PUBLIC        SMS3
+  C:0B75H         PUBLIC        SMS4
+  B:00A0H.1       PUBLIC        RW
+  C:0B78H         PUBLIC        SMS5
+  C:0D9AH         PUBLIC        _sendserial
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  B:00B0H.2       PUBLIC        vib
+  C:0B7BH         SYMBOL        _?ix1000
+  C:0D3FH         PUBLIC        _delay1
+  B:0088H.5       PUBLIC        TF0
+  D:008CH         PUBLIC        TH0
+  D:008DH         PUBLIC        TH1
+  D:008AH         PUBLIC        TL0
+  D:008BH         PUBLIC        TL1
+  B:0088H.4       PUBLIC        TR0
+  B:0088H.6       PUBLIC        TR1
+  C:0CCAH         PUBLIC        LCD_initialise
+  D:0016H         PUBLIC        i
+  C:0D1AH         PUBLIC        _display
+  C:0D7AH         PUBLIC        _datawrt
+  -------         PROC          _SENDSMS
+  D:000AH         SYMBOL        num
+  D:000DH         SYMBOL        msg
+  C:0B85H         LINE#         15
+  C:0B8BH         LINE#         16
+  C:0B8BH         LINE#         17
+BL51 BANKED LINKER/LOCATER V6.02                                                      07/21/2017  23:58:41  PAGE 4
+
+
+  C:0B8EH         LINE#         18
+  C:0B9AH         LINE#         19
+  C:0B9FH         LINE#         20
+  C:0BA2H         LINE#         22
+  C:0BA5H         LINE#         23
+  C:0BB4H         LINE#         24
+  C:0BB9H         LINE#         25
+  C:0BBCH         LINE#         27
+  C:0BBFH         LINE#         28
+  C:0BD2H         LINE#         29
+  C:0BD7H         LINE#         31
+  C:0BE3H         LINE#         32
+  C:0BF3H         LINE#         33
+  C:0BF8H         LINE#         34
+  C:0BFDH         LINE#         35
+  C:0C00H         LINE#         37
+  C:0C0CH         LINE#         38
+  C:0C1CH         LINE#         39
+  C:0C21H         LINE#         40
+  -------         ENDPROC       _SENDSMS
+  -------         PROC          _CALL
+  D:000AH         SYMBOL        num1
+  C:0C28H         LINE#         44
+  C:0C2EH         LINE#         45
+  C:0C2EH         LINE#         46
+  C:0C31H         LINE#         47
+  C:0C3DH         LINE#         48
+  C:0C42H         LINE#         49
+  C:0C45H         LINE#         51
+  C:0C48H         LINE#         52
+  C:0C5BH         LINE#         53
+  C:0C60H         LINE#         54
+  C:0C63H         LINE#         56
+  C:0C66H         LINE#         57
+  C:0C79H         LINE#         59
+  C:0C85H         LINE#         60
+  C:0C95H         LINE#         61
+  C:0C9AH         LINE#         62
+  C:0C9FH         LINE#         63
+  C:0CA6H         LINE#         64
+  C:0CADH         LINE#         66
+  C:0CB0H         LINE#         67
+  C:0CC3H         LINE#         68
+  -------         ENDPROC       _CALL
+  C:0D3BH         SYMBOL        L?0108
+  -------         PROC          L?0107
+  -------         ENDPROC       L?0107
+  C:0D3BH         SYMBOL        L?0108
+  -------         PROC          _DELAY1
+  D:0006H         SYMBOL        tim
+  -------         DO            
+  D:0004H         SYMBOL        h
+  -------         ENDDO         
+  C:0D3FH         LINE#         75
+  C:0D3FH         LINE#         76
+  C:0D3FH         LINE#         78
+  C:0D49H         LINE#         79
+BL51 BANKED LINKER/LOCATER V6.02                                                      07/21/2017  23:58:41  PAGE 5
+
+
+  C:0D4CH         LINE#         80
+  C:0D4FH         LINE#         81
+  C:0D52H         LINE#         82
+  C:0D54H         LINE#         83
+  C:0D57H         LINE#         84
+  C:0D59H         LINE#         85
+  C:0D60H         LINE#         88
+  -------         ENDPROC       _DELAY1
+  C:0D96H         SYMBOL        L?0106
+  -------         PROC          L?0105
+  -------         ENDPROC       L?0105
+  C:0D96H         SYMBOL        L?0106
+  -------         PROC          _SENDSERIAL
+  D:0007H         SYMBOL        mydata1
+  C:0D9AH         LINE#         91
+  C:0D9AH         LINE#         92
+  C:0D9AH         LINE#         94
+  C:0D9CH         LINE#         95
+  C:0D9EH         LINE#         96
+  C:0DA1H         LINE#         99
+  -------         ENDPROC       _SENDSERIAL
+  -------         PROC          INIT_SERIAL
+  C:0DA2H         LINE#         101
+  C:0DA2H         LINE#         102
+  C:0DA2H         LINE#         103
+  C:0DA5H         LINE#         104
+  C:0DA8H         LINE#         105
+  C:0DABH         LINE#         106
+  C:0DAEH         LINE#         107
+  C:0DB0H         LINE#         108
+  -------         ENDPROC       INIT_SERIAL
+  -------         PROC          LCD_INITIALISE
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:000AH         SYMBOL        j
+  D:000CH         SYMBOL        com
+  -------         ENDDO         
+  C:0CCAH         LINE#         13
+  C:0CCAH         LINE#         14
+  C:0CCAH         LINE#         16
+  C:0CDDH         LINE#         17
+  C:0CE2H         LINE#         18
+  C:0CEFH         LINE#         19
+  C:0CFDH         LINE#         20
+  C:0D0EH         LINE#         21
+  -------         ENDPROC       LCD_INITIALISE
+  -------         PROC          _COMWRT
+  D:0007H         SYMBOL        dat
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0D61H         LINE#         23
+  C:0D61H         LINE#         24
+  C:0D61H         LINE#         26
+  C:0D63H         LINE#         27
+  C:0D65H         LINE#         28
+  C:0D67H         LINE#         29
+BL51 BANKED LINKER/LOCATER V6.02                                                      07/21/2017  23:58:41  PAGE 6
+
+
+  C:0D69H         LINE#         30
+  C:0D77H         LINE#         31
+  C:0D79H         LINE#         32
+  -------         ENDPROC       _COMWRT
+  -------         PROC          _DATAWRT
+  D:0007H         SYMBOL        dat
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0D7AH         LINE#         34
+  C:0D7AH         LINE#         35
+  C:0D7AH         LINE#         37
+  C:0D7CH         LINE#         38
+  C:0D7EH         LINE#         39
+  C:0D80H         LINE#         40
+  C:0D82H         LINE#         41
+  C:0D90H         LINE#         42
+  C:0D92H         LINE#         43
+  -------         ENDPROC       _DATAWRT
+  -------         PROC          L?0109
+  -------         ENDPROC       L?0109
+  -------         PROC          _DISPLAY
+  D:0001H         SYMBOL        str
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0D1AH         LINE#         45
+  C:0D1AH         LINE#         46
+  C:0D1AH         LINE#         48
+  C:0D20H         LINE#         49
+  C:0D23H         LINE#         50
+  C:0D31H         LINE#         51
+  C:0D3AH         LINE#         52
+  -------         ENDPROC       _DISPLAY
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        r
+  -------         ENDDO         
+  C:0800H         LINE#         12
+  C:0800H         LINE#         13
+  C:0800H         LINE#         15
+  C:0803H         LINE#         16
+  C:0806H         LINE#         17
+  C:080BH         LINE#         18
+  C:0814H         LINE#         19
+  C:0836H         LINE#         20
+  C:0836H         LINE#         21
+  C:0839H         LINE#         22
+  C:083EH         LINE#         23
+  C:0845H         LINE#         24
+  C:0847H         LINE#         25
+  C:0847H         LINE#         26
+  C:084DH         LINE#         27
+  C:084FH         LINE#         28
+  C:0854H         LINE#         29
+  C:085DH         LINE#         30
+  C:0862H         LINE#         31
+BL51 BANKED LINKER/LOCATER V6.02                                                      07/21/2017  23:58:41  PAGE 7
+
+
+  C:0869H         LINE#         32
+  C:087EH         LINE#         33
+  C:0893H         LINE#         34
+  C:0898H         LINE#         35
+  C:08A1H         LINE#         36
+  C:08B0H         LINE#         37
+  C:08C2H         LINE#         38
+  C:08D4H         LINE#         39
+  C:08D9H         LINE#         40
+  C:08E2H         LINE#         41
+  C:08F7H         LINE#         42
+  C:090CH         LINE#         43
+  C:0921H         LINE#         44
+  C:0926H         LINE#         45
+  C:092FH         LINE#         46
+  C:0936H         LINE#         47
+  C:093FH         LINE#         48
+  C:0948H         LINE#         49
+  C:0948H         LINE#         50
+  C:094BH         LINE#         52
+  C:094EH         LINE#         54
+  C:094EH         LINE#         55
+  C:0950H         LINE#         56
+  C:0955H         LINE#         57
+  C:095EH         LINE#         58
+  C:095EH         LINE#         60
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        GSM
+
+  -------         MODULE        ?C?COPY
+  C:0A31H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+
+  -------         MODULE        ?C?CLDPTR
+  C:0A57H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?SLCMP
+  C:0A70H         PUBLIC        ?C?SLCMP
+  -------         ENDMOD        ?C?SLCMP
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 049BH BYTE (57%) *
+******************************************************************************
+
+Program Size: data=24.0 xdata=0 code=1472
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
