@@ -1,0 +1,16 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\SLR\Interlogicx\codes\PROJECTS\2015-2016\GHANA PROJ\RTC\RTC NEW\RTC.uvproj
+Project File Date:  07/15/2017
+
+<h2>Output:</h2>
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+Program Size: data=39.0 xdata=0 code=2197
+creating hex file from "RTC"...
+"RTC" - 0 Error(s), 0 Warning(s).

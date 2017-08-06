@@ -1,0 +1,326 @@
+C51 COMPILER V8.05a   MAIN                                                                 08/06/2017 08:18:43 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include"LCD.H"
+   3          #include"I2C.H"
+   4          #include"KEYPAD4_3.H"
+   5          
+   6          #define del(x) for(n=0;n<=x;n++)
+   7          
+   8          sbit set=P3^2;
+   9          sbit alarm=P3^3;
+  10          sbit buz=P2^3;
+  11          
+  12          unsigned int n;
+  13          
+  14          unsigned char get_rtc(unsigned char ad);
+  15          void disp_time(unsigned char h,unsigned char m,unsigned char s);
+  16          void disp_date(unsigned char h,unsigned char m,unsigned char s);
+  17          void set_time(unsigned char h,unsigned char m,unsigned char s);
+  18          void set_date(unsigned char h,unsigned char m,unsigned char s);
+  19          
+  20          void seT(void);
+  21          void al_set(void);
+  22          unsigned char ho=100,mi=100;
+  23          
+  24          void main()
+  25          {
+  26   1        unsigned char sec, min, hour, date, month, year;
+  27   1        buz=0;
+  28   1        lcd_init();
+  29   1        cmd(0x80);
+  30   1        show("  DIGITAL CLOCK ");
+  31   1        cmd(0xc0);
+  32   1        show("   WITH ALARM   "); 
+  33   1        del(60000);
+  34   1        cmd(0x01);
+  35   1        buz=1;
+  36   1        while(1) {
+  37   2          cmd(0x80);
+  38   2          show("TIME  : ");
+  39   2      
+  40   2          sec   = get_rtc(0x00);  
+  41   2          min   = get_rtc(0x01);  
+  42   2          hour  = get_rtc(0x02);
+  43   2          date  = get_rtc(0x04);
+  44   2          month = get_rtc(0x05);
+  45   2          year  = get_rtc(0x06);
+  46   2      
+  47   2          if((ho==hour) && (mi==min)) {
+  48   3            buz=0;
+  49   3            del(8000);
+  50   3            buz=1;
+  51   3            del(2000);
+  52   3            buz=0;
+  53   3            del(8000);
+  54   3            buz=1;
+  55   3          } else
+C51 COMPILER V8.05a   MAIN                                                                 08/06/2017 08:18:43 PAGE 2   
+
+  56   2            buz=1;
+  57   2      
+  58   2          if((ho==100)&&(mi==100)) {
+  59   3            disp_date(date,month,year);
+  60   3          } else {
+  61   3            cmd(0xc0);
+  62   3            show("Alarm :         ");
+  63   3            cmd(0xc8);
+  64   3            dat((ho/16)+48);
+  65   3            dat((ho%16)+48);
+  66   3            dat(' ');
+  67   3            dat(':');
+  68   3            dat(' ');
+  69   3            dat((mi/16)+48);
+  70   3            dat((mi%16)+48);
+  71   3            show("  ");
+  72   3          }  
+  73   2          if(set==0)
+  74   2            seT();
+  75   2          if(alarm==0)
+  76   2            al_set();
+  77   2      
+  78   2          disp_time(hour,min,sec);
+  79   2        }
+  80   1      }
+  81          
+  82          unsigned char get_rtc(unsigned char ad)
+  83          {
+  84   1        return (i2c_read_byte(ad));
+  85   1      }
+  86          
+  87          
+  88          void disp_time(unsigned char h,unsigned char m,unsigned char s)
+  89          {
+  90   1        cmd(0x88);
+  91   1        dat((h/16)+48);
+  92   1        dat((h%16)+48);
+  93   1        dat(':');
+  94   1        dat((m/16)+48);
+  95   1        dat((m%16)+48);
+  96   1        dat(':');
+  97   1        dat((s/16)+48);
+  98   1        dat((s%16)+48);
+  99   1      }
+ 100          
+ 101          void disp_date(unsigned char h,unsigned char m,unsigned char s)
+ 102          {
+ 103   1        cmd(0xc0);
+ 104   1        show("DATE  : ");
+ 105   1        cmd(0xc8);
+ 106   1        dat((h/16)+48);
+ 107   1        dat((h%16)+48);
+ 108   1        dat('/');
+ 109   1        dat((m/16)+48);
+ 110   1        dat((m%16)+48);
+ 111   1        dat('/');
+ 112   1        dat((s/16)+48);
+ 113   1        dat((s%16)+48);
+ 114   1      }
+ 115          
+ 116          void set_time(unsigned char h,unsigned char m,unsigned char s)
+ 117          {
+C51 COMPILER V8.05a   MAIN                                                                 08/06/2017 08:18:43 PAGE 3   
+
+ 118   1        unsigned char temp;
+ 119   1        temp=(h/10)<<4;
+ 120   1        h=temp|(h%10);
+ 121   1        temp=(m/10)<<4;
+ 122   1        m=temp|(m%10);
+ 123   1        temp=(s/10)<<4;
+ 124   1        s=temp|(s%10);
+ 125   1        i2c_send_byte(0x00,s);
+ 126   1        i2c_send_byte(0x01,m);
+ 127   1        i2c_send_byte(0x02,h);
+ 128   1      }
+ 129          
+ 130          void set_date(unsigned char h,unsigned char m,unsigned char s)
+ 131          {
+ 132   1        unsigned char temp;
+ 133   1        temp=(h/10)<<4;
+ 134   1        h=temp|(h%10);
+ 135   1        temp=(m/10)<<4;
+ 136   1        m=temp|(m%10);
+ 137   1        temp=(s/10)<<4;
+ 138   1        s=temp|(s%10);
+ 139   1        i2c_send_byte(0x06,s);
+ 140   1        i2c_send_byte(0x05,m);
+ 141   1        i2c_send_byte(0x04,h);
+ 142   1      }
+ 143          
+ 144          void seT()
+ 145          {
+ 146   1        unsigned char t1,t2,h,s,m;
+ 147   1            cmd(0x01);
+ 148   1            cmd(0x80);
+ 149   1            show("    SET TIME    ");
+ 150   1        L1:   cmd(0xc0);
+ 151   1            show("HH:");
+ 152   1            t1=keypad();
+ 153   1            dat(t1);
+ 154   1            t1=(t1-0x30)*10;
+ 155   1            t2=keypad();
+ 156   1            dat(t2);
+ 157   1            t2=t2-0x30;
+ 158   1            h=t1+t2;
+ 159   1              if(h>23)
+ 160   1              {
+ 161   2              cmd(0xc3);
+ 162   2              show("  ");
+ 163   2              goto L1;
+ 164   2              }
+ 165   1            dat(' ');
+ 166   1            del(30000);
+ 167   1        L2:   cmd(0xc6);
+ 168   1            show("MM:");
+ 169   1            t1=keypad();
+ 170   1            dat(t1);
+ 171   1            t1=(t1-0x30)*10;
+ 172   1            t2=keypad();
+ 173   1            dat(t2);
+ 174   1            t2=t2-0x30;
+ 175   1            m=t1+t2;
+ 176   1            if(m>59)
+ 177   1              {
+ 178   2              cmd(0xc9);
+ 179   2              show("  ");
+C51 COMPILER V8.05a   MAIN                                                                 08/06/2017 08:18:43 PAGE 4   
+
+ 180   2              goto L2;
+ 181   2              }
+ 182   1            del(30000);
+ 183   1        L3:   cmd(0xcb);
+ 184   1            show("SS:");
+ 185   1            t1=keypad();
+ 186   1            dat(t1);
+ 187   1            t1=(t1-0x30)*10;
+ 188   1            t2=keypad();
+ 189   1            dat(t2);
+ 190   1            t2=t2-0x30;
+ 191   1            s=t1+t2;
+ 192   1            if(s>59)
+ 193   1              {
+ 194   2              cmd(0xce);
+ 195   2              show("  ");
+ 196   2              goto L3;
+ 197   2              }
+ 198   1            set_time(h,m,s);
+ 199   1            del(30000);
+ 200   1            
+ 201   1            cmd(0x01);
+ 202   1            cmd(0x80);
+ 203   1            show("    SET DATE    ");
+ 204   1        L4:   cmd(0xc0);
+ 205   1            show("DD:");
+ 206   1            t1=keypad();
+ 207   1            dat(t1);
+ 208   1            t1=(t1-0x30)*10;
+ 209   1            t2=keypad();
+ 210   1            dat(t2);
+ 211   1            t2=t2-0x30;
+ 212   1            h=t1+t2;
+ 213   1              if(h>31)
+ 214   1              {
+ 215   2              cmd(0xc3);
+ 216   2              show("  ");
+ 217   2              goto L4;
+ 218   2              }
+ 219   1            dat(' ');
+ 220   1            del(30000);
+ 221   1        L5:   cmd(0xc6);
+ 222   1            show("MM:");
+ 223   1            t1=keypad();
+ 224   1            dat(t1);
+ 225   1            t1=(t1-0x30)*10;
+ 226   1            t2=keypad();
+ 227   1            dat(t2);
+ 228   1            t2=t2-0x30;
+ 229   1            m=t1+t2;
+ 230   1            if(m>12)
+ 231   1              {
+ 232   2              cmd(0xc9);
+ 233   2              show("  ");
+ 234   2              goto L5;
+ 235   2              }
+ 236   1            del(30000);
+ 237   1            cmd(0xcb);
+ 238   1            show("YY:");
+ 239   1            t1=keypad();
+ 240   1            dat(t1);
+ 241   1            t1=(t1-0x30)*10;
+C51 COMPILER V8.05a   MAIN                                                                 08/06/2017 08:18:43 PAGE 5   
+
+ 242   1            t2=keypad();
+ 243   1            dat(t2);
+ 244   1            t2=t2-0x30;
+ 245   1            s=t1+t2;
+ 246   1            set_date(h,m,s);
+ 247   1            del(30000);   
+ 248   1            cmd(0x01);
+ 249   1      }
+ 250          
+ 251          void al_set()
+ 252          {
+ 253   1        unsigned char t1,t2;
+ 254   1            cmd(0x01);
+ 255   1            cmd(0x80);
+ 256   1            show("   SET  ALARM   ");
+ 257   1        L4:   cmd(0xc0);
+ 258   1            show("HOUR: ");
+ 259   1            t1=keypad();
+ 260   1            dat(t1);
+ 261   1            t1=(t1-0x30)*10;
+ 262   1            t2=keypad();
+ 263   1            dat(t2);
+ 264   1            t2=t2-0x30;
+ 265   1            ho=t1+t2;
+ 266   1            if(ho>23)
+ 267   1              {
+ 268   2              cmd(0xc6);
+ 269   2              show("  ");
+ 270   2              goto L4;
+ 271   2              }
+ 272   1        L5:   cmd(0xc9);
+ 273   1            show("MIN: ");
+ 274   1            t1=keypad();
+ 275   1            dat(t1);
+ 276   1            t1=(t1-0x30)*10;
+ 277   1            t2=keypad();
+ 278   1            dat(t2);
+ 279   1            t2=t2-0x30;
+ 280   1            mi=t1+t2;
+ 281   1            if(mi>59)
+ 282   1              {
+ 283   2              cmd(0xce);
+ 284   2              show("  ");
+ 285   2              goto L5;
+ 286   2              }
+ 287   1              t1=0;
+ 288   1            t1=(ho/10)<<4;
+ 289   1            ho=t1|(ho%10);
+ 290   1            t1=0;
+ 291   1            t1=(mi/10)<<4;
+ 292   1            mi=t1|(mi%10);
+ 293   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1830    ----
+   CONSTANT SIZE    =    156    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     17      21
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V8.05a   MAIN                                                                 08/06/2017 08:18:43 PAGE 6   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
