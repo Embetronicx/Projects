@@ -1,0 +1,16 @@
+This is project titled "DESIGN AND CONSTRUCTION OF MICROCONTROLLER  BASED DIGITAL CLOCK WITH ALARM"
+
+ABSTRACT
+
+This paper talks about the indigence of Real Time Clock (RTC) for maintaining real timing constraints 
+for various specific applications. Real time Clocking is widely and generally used in various electronic 
+appliances so that tracking the traces becomes versatile and flexible for security purpose. Digital cameras 
+used RTC in it so that when the image is captured it will have details of, on which day and date it was 
+captured for future reference. Such RTCs are very useful when it comes to the need of security, cogent 
+evidence and investigations. Microcontroller AT89S52 is programmed using I2C Protocol with DS1307 RTC IC in 
+such a way so as to maintain Real timing and same is displayed on LCD. The parameters can be varied by means 
+of matrix keypad.
+
+you can find the explanation in below link.
+
+http://www.embetronicx.com/tutorials/microcontrollers/8051/rtc-interfacing-with-8051-alarm-clock-ds1307/
