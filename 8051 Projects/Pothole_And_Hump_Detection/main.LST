@@ -1,0 +1,110 @@
+C51 COMPILER V8.05a   MAIN                                                                 08/06/2017 19:45:55 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include"ULTRASONIC.H"
+   3          #include"GSM.H"
+   4          #include"LCD.H"
+   5          
+   6          #define NUMBER "0123456789"  //Your mobile number
+   7          
+   8          #define delay for(i=0;i<=60000;i++)
+   9          
+  10          sbit sw=P0^7;
+  11          
+  12          unsigned int range=0,i,k;
+  13          unsigned char snumb[10],numb[10],temp;
+  14          unsigned char hump[]="Distance:   cm,        detected";
+  15          
+  16          void main(void)
+  17          {
+  18   1        ser_init();
+  19   1        ultrasonic_init();
+  20   1        lcd_init();
+  21   1        show("Loading ");
+  22   1        for(k=0;k<5;k++) {
+  23   2          dat('.');
+  24   2          delay;
+  25   2        }
+  26   1        sw=1;
+  27   1        delay;
+  28   1        while(1) {
+  29   2          cmd(0x80);
+  30   2          show("DISTANCE: ");
+  31   2          range=ultrasonic();
+  32   2          cmd(0x8a);
+  33   2          dat((range/100)+48);
+  34   2          dat(((range/10)%10)+48);
+  35   2          dat((range%10)+48);
+  36   2          show(" cm ");
+  37   2            if(sw==0) {
+  38   3              if(range<16) {
+  39   4                cmd(0xc0);
+  40   4                show("Hump Detected...");
+  41   4                hump[9]=(range/100)+48;
+  42   4                hump[10]=((range/10)%10)+48;
+  43   4                hump[11]=(range%10)+48;
+  44   4                hump[15]=' ';
+  45   4                hump[16]=' ';
+  46   4                hump[17]='H';
+  47   4                hump[18]='U';
+  48   4                hump[19]='M';
+  49   4                hump[20]='P';
+  50   4                hump[21]=' '; 
+  51   4                cmd(0xc0);
+  52   4                show("Sending message!");
+  53   4                sms(NUMBER,hump); 
+  54   4                cmd(0xc0);
+  55   4                show("Message Sent!!!!");
+C51 COMPILER V8.05a   MAIN                                                                 08/06/2017 19:45:55 PAGE 2   
+
+  56   4                delay;
+  57   4              } else if ((range>20) && (range<50)) {
+  58   4              cmd(0xc0);
+  59   4              show("Pothole Detected");
+  60   4              hump[9]=(range/100)+48;
+  61   4              hump[10]=((range/10)%10)+48;
+  62   4              hump[11]=(range%10)+48;
+  63   4              hump[15]='P';
+  64   4              hump[16]='O';
+  65   4              hump[17]='T';
+  66   4              hump[18]='H';
+  67   4              hump[19]='O';
+  68   4              hump[20]='L';
+  69   4              hump[21]='E';
+  70   4              cmd(0xc0);
+  71   4              show("Sending message!");
+  72   4              sms(NUMBER,hump);
+  73   4              cmd(0xc0);
+  74   4              show("Message Sent!!!!");
+  75   4              delay;
+  76   4            } else {
+  77   4              cmd(0xc0);
+  78   4              show("<<Drive Safely>>"); 
+  79   4            }
+  80   3          } else {
+  81   3            cmd(0xc0);
+  82   3            show("~PLS SWITCH ON~ "); 
+  83   3          }
+  84   2        }
+  85   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1150    ----
+   CONSTANT SIZE    =    168    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     61      16
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
