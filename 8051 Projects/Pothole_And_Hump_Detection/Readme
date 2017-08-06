@@ -1,0 +1,22 @@
+Automatic Detection And Notification of Potholes and Humps on Road
+
+Abstract
+
+Many on-going projects in the field of vehicular networks are working in 
+the direction of providing driver with relevant information about roads and 
+traffic movements. One of the major problems in developing countries is 
+maintenance of roads. Well maintained roads contribute a major portion to 
+the country’s economy. And also many people are killed by unwanted potholes 
+and humps on road. So Identification of pavement distress such as potholes 
+and humps not only helps drivers to avoid accidents or vehicle damages but 
+also helps authorities to maintain roads. The implementation of this service 
+will provide users with valuable information about the conditions of roadways 
+that will limit potential damage to the user’s vehicle or Maintenance Authority. 
+This project proposes a cost effective solution to identify potholes and humps 
+on roads and provide timely alerts to drivers to avoid accidents or vehicle damages, 
+and also send a message to authorities. Ultrasonic sensor is used to identify potholes 
+and humps and also to measure their depth and height respectively. The sensed-data 
+includes pothole depth, height of hump.
+
+If you want to see the explanation and circuit digram, please visit below link.
+http://www.embetronicx.com/projects/8051-projects/automatic-detection-and-notification-of-potholes-and-humps-on-roads/
