@@ -1,0 +1,72 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\SLR\Interlogicx\codes\PROJECTS\2015-2016\GHANA PROJ\GAS leakage system\Codings\security.uvproj
+Project File Date:  07/25/2017
+
+<h2>Output:</h2>
+Rebuild target 'Target 1'
+compiling security.c...
+SECURITY.C(80): error C202: 'SNUM': undefined identifier
+Target not created
+Rebuild target 'Target 1'
+compiling security.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_CALL?SECURITY
+Program Size: data=35.0 xdata=0 code=1558
+creating hex file from "security"...
+"security" - 0 Error(s), 1 Warning(s).
+Rebuild target 'Target 1'
+compiling security.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_CALL?SECURITY
+Program Size: data=35.0 xdata=0 code=1551
+creating hex file from "security"...
+"security" - 0 Error(s), 1 Warning(s).
+Rebuild target 'Target 1'
+compiling security.c...
+SECURITY.C(31): error C141: syntax error near '{', expected ')'
+Target not created
+Rebuild target 'Target 1'
+compiling security.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_CALL?SECURITY
+Program Size: data=35.0 xdata=0 code=1551
+creating hex file from "security"...
+"security" - 0 Error(s), 1 Warning(s).
+Rebuild target 'Target 1'
+compiling security.c...
+SECURITY.C(38): error C202: 'motor': undefined identifier
+SECURITY.C(67): error C202: 'motor': undefined identifier
+SECURITY.C(76): error C202: 'motor': undefined identifier
+SECURITY.C(86): error C202: 'motor': undefined identifier
+Target not created
+Rebuild target 'Target 1'
+compiling security.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_CALL?SECURITY
+Program Size: data=35.0 xdata=0 code=1541
+creating hex file from "security"...
+"security" - 0 Error(s), 1 Warning(s).
+Rebuild target 'Target 1'
+compiling security.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_CALL?SECURITY
+Program Size: data=35.0 xdata=0 code=1541
+creating hex file from "security"...
+"security" - 0 Error(s), 1 Warning(s).
+Rebuild target 'Target 1'
+compiling security.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_CALL?SECURITY
+Program Size: data=35.0 xdata=0 code=1541
+creating hex file from "security"...
+"security" - 0 Error(s), 1 Warning(s).

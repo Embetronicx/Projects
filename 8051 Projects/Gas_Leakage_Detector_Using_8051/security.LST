@@ -1,0 +1,114 @@
+C51 COMPILER V8.05a   SECURITY                                                             10/20/2017 19:47:42 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE SECURITY
+OBJECT MODULE PLACED IN security.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE security.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #include"LCD.h"        //rs=p3.7, en=p3.6
+   3          #include"GSM.h"
+   4          
+   5          #define NUM "1234567890"    //Enter Your Mobile Number
+   6          
+   7          sbit rd=P0^7;
+   8          sbit wr=P0^6;
+   9          sbit intr=P0^5;
+  10          
+  11          sbit RELAY=P0^0;
+  12          sbit buzz=P0^1;
+  13          
+  14          
+  15          unsigned char h,g,temp,mydata,msgq;
+  16          unsigned int s,r;
+  17          void adc();
+  18          
+  19          unsigned char adc_data=0;
+  20          
+  21          void main()
+  22          {
+  23   1      
+  24   1        init_serial();
+  25   1        LCD_initialise();
+  26   1        RELAY=1;         //relay on
+  27   1        buzz=0;          //buzz on
+  28   1        comwrt(0x80);
+  29   1        display("LOADING.");
+  30   1        for(h=0;h<8;h++) {
+  31   2          datawrt('.');
+  32   2          for(s=0;s<30000;s++);
+  33   2        }
+  34   1        P2=0xFF;
+  35   1        comwrt(0x80);
+  36   1        display("GAS:000PPM R:OFF");
+  37   1        buzz=0;
+  38   1        for(r=0;r<=10000;r++);
+  39   1      
+  40   1        while(1) {
+  41   2          adc();
+  42   2          for(r=0;r<=20000;r++);      
+  43   2        }
+  44   1      }
+  45          
+  46          
+  47          void adc()
+  48          {
+  49   1      wr=0;
+  50   1      rd=1;
+  51   1      wr=1;
+  52   1      while(intr==1);
+  53   1      rd=0;
+  54   1      adc_data = P2 ;
+  55   1      
+C51 COMPILER V8.05a   SECURITY                                                             10/20/2017 19:47:42 PAGE 2   
+
+  56   1      msgq = adc_data;
+  57   1      
+  58   1        comwrt(0x84);
+  59   1        datawrt((msgq/100)+0x30);
+  60   1        datawrt(((msgq/10)%10)+0x30);
+  61   1        datawrt((msgq%10)+0x30);
+  62   1        
+  63   1        if(msgq > 80) {
+  64   2          RELAY=0;         //relay off
+  65   2          buzz=0;          //buzz on
+  66   2          comwrt(0x8D);
+  67   2          display("OFF");
+  68   2          
+  69   2              comwrt(0xC0);
+  70   2              display("G:HIGH   V:CLOSE");
+  71   2              for(s=0;s<60000;s++);
+  72   2              comwrt(0xC0);
+  73   2              display("SENDING MSG.....");
+  74   2              
+  75   2              sendSMS(NUM,"VOLVE CLOSED AND POWER DISCONNECTED DUE TO GAS LEAKAGE!");
+  76   2              for(s=0;s<30000;s++);
+  77   2              comwrt(0x80);
+  78   2              display("GAS:");
+  79   2              comwrt(0x8b);
+  80   2              display("R:");
+  81   2        } else {
+  82   2          comwrt(0xC0);
+  83   2          display("G:NORMAL V:OPEN ");
+  84   2          RELAY=1;     //relay on
+  85   2          buzz=1;      //buzz off
+  86   2          comwrt(0x8D);
+  87   2          display("ON "); 
+  88   2        }
+  89   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    906    ----
+   CONSTANT SIZE    =    195    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     11      21
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
